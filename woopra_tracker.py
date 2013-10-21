@@ -110,12 +110,12 @@ class WoopraTracker:
 			get_params["cv_" + k] = v
 
 		if not is_tracking:
-			url = "/track/identify/?" + urllib.urlencode(get_params) + "&ce__w_app=" + WoopraTracker.SDK_ID
+			url = "/track/identify/?" + urllib.urlencode(get_params) + "&app=" + WoopraTracker.SDK_ID
 		else:
 			get_params["ce_name"] = event_name
 			for k,v in event_data.iteritems():
 				get_params["ce_" + k] = v
-			url = "/track/ce/?" + urllib.urlencode(get_params) + "&ce__w_app=" + WoopraTracker.SDK_ID
+			url = "/track/ce/?" + urllib.urlencode(get_params) + "&app=" + WoopraTracker.SDK_ID
 		try:
 			conn = httplib.HTTPConnection(base_url)
 			if self.user_agent != None:
