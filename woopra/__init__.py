@@ -11,7 +11,7 @@ class WoopraTracker:
 	"""
 
 	SDK_ID = "python"
-	default_timeout = 300000
+	DEFAULT_TIMEOUT = 300000
 	EMAIL = "email"
 	UNIQUE_ID = "unique_id"
 
@@ -24,7 +24,7 @@ class WoopraTracker:
 			WoopraTracker
 		"""
 		self.domain = domain
-		self.idle_timeout = WoopraTracker.default_timeout
+		self.idle_timeout = WoopraTracker.DEFAULT_TIMEOUT
 		self.user_properties = {}
 		self.cookie_value = None
 		self.user_agent = None
