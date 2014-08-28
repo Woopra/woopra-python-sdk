@@ -125,5 +125,5 @@ class WoopraTracker:
 		except HTTPException:
 			print "exception occured"
 
-	def set_timeout(timeout):
+	def set_timeout(self, timeout):
 		self.idle_timeout = timeout
