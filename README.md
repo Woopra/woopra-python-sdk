@@ -26,21 +26,23 @@ woopra.set_timeout(15000)
 To identify a user, you should use the <code>identify()</code> function. You can choose to identify the visitor with his EMAIL, or with a UNIQUE_ID of your choice (in this case, make sure to re-use the same ID for a given visitor accross different visits).
 
 ```
-woopra.identify(WoopraTracker.EMAIL ,
-	"johndoe@mybusiness.com", {
+woopra.identify(WoopraTracker.EMAIL , 
+	"johndoe@mybusiness.com", 
+	{
 		'name' : 'Test Name2',
 		'admin' : False
-	}, IP_ADDRESS, # the IP address of the user
-	USER_AGENT /# the user agent
+	}, 
+	IP_ADDRESS, # the IP address of the user
+	USER_AGENT # the user agent
 )
 ```
 
 And you're ready to start tracking events:
 ```python
 woopra.track("play", {
-	"artist" : "Dave Brubeck"},
-	"song" : "Take Five"},
-	"genre" : "Jazz"}
+	"artist" : "Dave Brubeck",
+	"song" : "Take Five",
+	"genre" : "Jazz"
 })
 ```
 
