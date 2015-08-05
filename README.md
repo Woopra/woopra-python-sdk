@@ -25,7 +25,7 @@ woopra.set_timeout(15000)
 ```
 To identify a user, you should use the <code>identify()</code> function. You can choose to identify the visitor with his EMAIL, or with a UNIQUE_ID of your choice (in this case, make sure to re-use the same ID for a given visitor accross different visits).
 
-```python
+```
 woopra.identify(WoopraTracker.EMAIL ,
 	"johndoe@mybusiness.com", {
 		'name' : 'Test Name2',
