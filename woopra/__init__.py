@@ -28,7 +28,7 @@ class WoopraTracker:
 		self.user_properties = {}
 		self.cookie_value = None
 		self.user_agent = None
-		self.ip_addresss = None
+		self.ip_address = None
 
 	def identify(self, identifier, value, user_properties = {}, ip_address = None, user_agent = None):
 		"""
