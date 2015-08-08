@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import urllib
-import httplib
+from __future__ import print_function, unicode_literals
+try:
+	from urllib.parse import urlencode
+	from http.client import HTTPConnection
+except ImportError:
+	from urllib import urlencode
+	from httplib import HTTPConnection
 import hashlib
 
 class WoopraTracker:
@@ -50,7 +55,7 @@ class WoopraTracker:
 			self.user_properties = user_properties
 			self.user_properties["email"] = value
 			m = hashlib.md5()
-			m.update(value)
+			m.update(value.encode('utf8'))
 			long_cookie = m.hexdigest().upper()
 			self.cookie_value = (long_cookie[:12]) if len(long_cookie) > 12 else long_cookie
 		elif identifier == WoopraTracker.UNIQUE_ID:
@@ -59,7 +64,7 @@ class WoopraTracker:
 			self.user_properties = user_properties
 			self.cookie_value = value
 		else:
-			print "Wrong identifier. Accepted values are WoopraTracker.EMAIL or WoopraTracker.UNIQUE_ID"
+			print("Wrong identifier. Accepted values are WoopraTracker.EMAIL or WoopraTracker.UNIQUE_ID")
 
 	def track(self, event_name, event_data = {}):
 		"""
@@ -106,24 +111,24 @@ class WoopraTracker:
 			get_params["timeout"] = self.idle_timeout
 
 		# Identification
-		for k, v in self.user_properties.iteritems():
+		for k, v in self.user_properties.items():
 			get_params["cv_" + k] = v
 
 		if not is_tracking:
-			url = "/track/identify/?" + urllib.urlencode(get_params) + "&ce_app=" + WoopraTracker.SDK_ID
+			url = "/track/identify/?" + urlencode(get_params) + "&ce_app=" + WoopraTracker.SDK_ID
 		else:
 			get_params["ce_name"] = event_name
-			for k,v in event_data.iteritems():
+			for k,v in event_data.items():
 				get_params["ce_" + k] = v
-			url = "/track/ce/?" + urllib.urlencode(get_params) + "&ce_app=" + WoopraTracker.SDK_ID
+			url = "/track/ce/?" + urlencode(get_params) + "&ce_app=" + WoopraTracker.SDK_ID
 		try:
-			conn = httplib.HTTPConnection(base_url)
+			conn = HTTPConnection(base_url)
 			if self.user_agent != None:
 				conn.request("GET", url, headers={'User-agent': self.user_agent})
 			else:
 				conn.request("GET", url)
 		except HTTPException:
-			print "exception occured"
+			print("exception occured")
 
 	def set_timeout(self, timeout):
 		self.idle_timeout = timeout
