@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='woopra',
-    version='0.2.1',
+    version='0.2.2',
     author='Antoine Chkaiban',
     author_email='antoine@woopra.com',
     url='https://github.com/Woopra/woopra-python-sdk',
