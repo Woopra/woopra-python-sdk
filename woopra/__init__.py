@@ -7,6 +7,8 @@ try:
 except ImportError:
 	from urllib import urlencode
 	from httplib import HTTPConnection
+	from httplib import HTTPSConnection
+	from httplib import HTTPException
 import hashlib
 
 class WoopraTracker:
@@ -29,6 +31,7 @@ class WoopraTracker:
 			WoopraTracker
 		"""
 		self.domain = domain
+		self.secure = False
 		self.idle_timeout = WoopraTracker.DEFAULT_TIMEOUT
 		self.user_properties = {}
 		self.cookie_value = None
@@ -99,17 +102,17 @@ class WoopraTracker:
 		Result:
 			None
 		"""
-		base_url = "www.woopra.com"
+
+		
 		get_params = {}
 
 		# Configuration
 		get_params["host"] = self.domain
-		get_params["cookie"] = self.cookie_value
+		# get_params["cookie"] = self.cookie_value
 		if self.ip_address != None:
 			get_params["ip"] = self.ip_address
 		if self.idle_timeout != None:
 			get_params["timeout"] = self.idle_timeout
-
 		# Identification
 		for k, v in self.user_properties.items():
 			get_params["cv_" + k] = v
@@ -122,13 +125,20 @@ class WoopraTracker:
 				get_params["ce_" + k] = v
 			url = "/track/ce/?" + urlencode(get_params) + "&ce_app=" + WoopraTracker.SDK_ID
 		try:
-			conn = HTTPConnection(base_url)
+			if self.secure:
+				conn = HTTPSConnection("www.woopra.com")
+			else:
+				conn = HTTPConnection("www.woopra.com")
+
 			if self.user_agent != None:
 				conn.request("GET", url, headers={'User-agent': self.user_agent})
 			else:
 				conn.request("GET", url)
-		except HTTPException:
-			print("exception occured")
+		except HTTPException, e: print(str(e))
+
 
 	def set_timeout(self, timeout):
 		self.idle_timeout = timeout
+
+	def set_secure(self, secure):
+		self.secure = secure
