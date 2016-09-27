@@ -4,7 +4,7 @@ The purpose of this SDK is to allow our customers who have servers running Pytho
 
 ## Installation
 ```python
-pip install woopra
+ pip install git+https://github.com/Woopra/woopra-python-sdk.git
 ```
 
 ## Usage
@@ -23,6 +23,15 @@ You can also configure the timeout (in milliseconds, defaults to 30000 - equival
 # set the timeout to 15seconds:
 woopra.set_timeout(15000)
 ```
+
+
+You can also configure the secure (https) tracking:
+
+```python
+woopra.set_secure(True)
+```
+
+
 To identify a user, you should use the <code>identify()</code> function. You can choose to identify the visitor with his EMAIL, or with a UNIQUE_ID of your choice (in this case, make sure to re-use the same ID for a given visitor accross different visits).
 
 ```
