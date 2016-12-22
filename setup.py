@@ -1,12 +1,12 @@
 from setuptools import setup
 
 setup(
-    name='woopra_tracker',
+    name='woopra',
     version='0.3',
     author='Woopra',
     author_email='dev@woopra.com',
     url='https://github.com/Woopra/woopra-python-sdk',
-    packages=['woopra_tracker'],
+    packages=['woopra'],
     license='LICENSE.txt',
     description='Woopra Analytics Tracking API',
 )

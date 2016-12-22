@@ -1,4 +1,4 @@
-from woopra_tracker import WoopraTracker
+from woopra import WoopraTracker
 
 if __name__ == '__main__':
 	woopra = WoopraTracker("jadyounan.com")
