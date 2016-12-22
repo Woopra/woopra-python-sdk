@@ -48,6 +48,9 @@ class WoopraTracker:
 	def set_user_agent(self, user_agent):
 		self.user_agent = user_agent
 
+	def set_secure(self, secure):
+                self.secure = secure
+
 	def identify(self, user_properties = {}):
 		"""
 		Identifies a user.
@@ -142,10 +145,3 @@ class WoopraTracker:
 			else:
 				conn.request("GET", url)
 		except HTTPException, e: print(str(e))
-
-
-	def set_timeout(self, timeout):
-		self.idle_timeout = timeout
-
-	def set_secure(self, secure):
-		self.secure = secure
