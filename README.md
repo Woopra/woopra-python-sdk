@@ -3,6 +3,11 @@ Track customers directly in Python using Woopra's Python SDK
 The purpose of this SDK is to allow our customers who have servers running Python to track their users by writing only Python code. Tracking directly in Python will allow you to track your users through the back-end without having to handle http requests manually.
 
 ## Installation
+
+```python
+ pip install woopra_tracker
+```
+OR
 ```python
  pip install git+https://github.com/Woopra/woopra-python-sdk.git
 ```
