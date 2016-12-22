@@ -19,8 +19,6 @@ class WoopraTracker:
 
 	SDK_ID = "python"
 	DEFAULT_TIMEOUT = 300000
-	EMAIL = "email"
-	UNIQUE_ID = "unique_id"
 
 	def __init__(self, domain):
 		"""
@@ -34,40 +32,45 @@ class WoopraTracker:
 		self.secure = False
 		self.idle_timeout = WoopraTracker.DEFAULT_TIMEOUT
 		self.user_properties = {}
-		self.cookie_value = None
+		self.cookie = None
 		self.user_agent = None
 		self.ip_address = None
 
-	def identify(self, identifier, value, user_properties = {}, ip_address = None, user_agent = None):
+	def set_idle_timeout(self, idle_timeout):
+		self.idle_timeout = idle_timeout
+
+	def set_cookie(self, cookie):
+		self.cookie = cookie
+
+	def set_ip_address(self, ip_address):
+		self.ip_addres = ip_address
+
+	def set_user_agent(self, user_agent):
+		self.user_agent = user_agent
+
+	def identify(self, user_properties = {}):
 		"""
 		Identifies a user.
 		Parameters:
-			identifier:
-				WoopraTracker.EMAIL to identify the user with his email (will generate unique ID automatically with a hash of the email)
-				WoopraTracker.UNIQUE_ID to identify the user with a unique ID directly
-			value - str : the value of the identifier (email or unique ID)
 			properties (optional) - dict : the user's additional properties (name, company, ...)
 				key - str : the user property name
 				value -str, int, bool = the user property value
-			ip_address (optional) - str : the IP address of the user.
-			user_agent (optional) - str : the value of the user_agent header
 		"""
-		if identifier == WoopraTracker.EMAIL:
-			self.user_agent = user_agent
-			self.ip_address = ip_address
-			self.user_properties = user_properties
-			self.user_properties["email"] = value
-			m = hashlib.md5()
-			m.update(value.encode('utf8'))
-			long_cookie = m.hexdigest().upper()
-			self.cookie_value = (long_cookie[:12]) if len(long_cookie) > 12 else long_cookie
-		elif identifier == WoopraTracker.UNIQUE_ID:
-			self.user_agent = user_agent
-			self.ip_address = ip_address
-			self.user_properties = user_properties
-			self.cookie_value = value
-		else:
-			print("Wrong identifier. Accepted values are WoopraTracker.EMAIL or WoopraTracker.UNIQUE_ID")
+
+		self.user_properties = user_properties
+
+		if self.cookie == None:
+			value=None
+			if 'id' in self.user_properties:
+				value=self.user_properties['id']
+			elif 'email' in self.user_properties:
+				value=self.user_properties['email']
+
+			if value != None:
+				m = hashlib.md5()
+				m.update(value.encode('utf8'))
+				long_cookie = m.hexdigest().upper()
+				self.cookie = (long_cookie[:12]) if len(long_cookie) > 12 else long_cookie
 
 	def track(self, event_name, event_data = {}):
 		"""
@@ -103,16 +106,20 @@ class WoopraTracker:
 			None
 		"""
 
-		
 		get_params = {}
 
 		# Configuration
 		get_params["host"] = self.domain
-		# get_params["cookie"] = self.cookie_value
+
 		if self.ip_address != None:
 			get_params["ip"] = self.ip_address
+
 		if self.idle_timeout != None:
 			get_params["timeout"] = self.idle_timeout
+
+		if self.cookie != None:
+			get_params["cookie"] = self.cookie
+
 		# Identification
 		for k, v in self.user_properties.items():
 			get_params["cv_" + k] = v
