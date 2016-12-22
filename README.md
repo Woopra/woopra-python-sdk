@@ -5,7 +5,7 @@ The purpose of this SDK is to allow our customers who have servers running Pytho
 ## Installation
 
 ```python
- pip install woopra_tracker
+ pip install woopra
 ```
 OR
 ```python
