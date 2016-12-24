@@ -18,7 +18,7 @@ class WoopraTracker:
 	"""
 
 	SDK_ID = "python"
-	DEFAULT_TIMEOUT = 300000
+	DEFAULT_TIMEOUT = 30000
 
 	def __init__(self, domain):
 		"""
