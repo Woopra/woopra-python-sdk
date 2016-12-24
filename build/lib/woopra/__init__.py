@@ -3,7 +3,7 @@
 from __future__ import print_function, unicode_literals
 try:
 	from urllib.parse import urlencode
-	from http.client import HTTPConnection
+	from http.client import HTTPConnection,HTTPException,HTTPSConnection
 except ImportError:
 	from urllib import urlencode
 	from httplib import HTTPConnection
@@ -18,7 +18,7 @@ class WoopraTracker:
 	"""
 
 	SDK_ID = "python"
-	DEFAULT_TIMEOUT = 300000
+	DEFAULT_TIMEOUT = 30000
 
 	def __init__(self, domain):
 		"""
@@ -144,4 +144,4 @@ class WoopraTracker:
 				conn.request("GET", url, headers={'User-agent': self.user_agent})
 			else:
 				conn.request("GET", url)
-		except HTTPException, e: print(str(e))
+		except HTTPException as e: print(str(e))
