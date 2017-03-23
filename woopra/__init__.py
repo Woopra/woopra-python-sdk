@@ -43,7 +43,7 @@ class WoopraTracker:
 		self.cookie = cookie
 
 	def set_ip_address(self, ip_address):
-		self.ip_addres = ip_address
+		self.ip_address = ip_address
 
 	def set_user_agent(self, user_agent):
 		self.user_agent = user_agent
